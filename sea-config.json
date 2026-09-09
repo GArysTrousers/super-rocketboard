@@ -1,0 +1,6 @@
+{
+	"main": "./build/index.js",
+	"mainFormat": "module",
+	"output": "./super-rocketboard.exe",
+  "disableExperimentalSEAWarning": true
+}
