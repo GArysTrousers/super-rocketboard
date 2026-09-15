@@ -1,6 +1,7 @@
 import { command, getRequestEvent, query } from '$app/server';
 import { sql } from '$lib/db';
 import { apiPersmission } from '$lib/session';
+import { refreshDevice } from '$lib/sse';
 import z from 'zod';
 
 const getPlaylistsArgs = z.undefined();
@@ -50,6 +51,8 @@ export const updateDevice = command(updateDeviceArgs, async (data) => {
     WHERE deviceId = :deviceId`,
 		{ ...data, updated: Date.now() }
 	);
+  refreshDevice(data.deviceId)
+  console.log('refresh',data.deviceId);
 });
 
 const removeDeviceArgs = z.object({

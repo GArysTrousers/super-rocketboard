@@ -26,7 +26,7 @@
 
 <div class="flex flex-row gap-3">
 	<div class="fixed flex flex-col justify-between h-screen bg-slate-700 px-3 pt-5">
-		<div class="flex w-80 flex-col gap-4">
+		<div class="flex w-64 flex-col gap-4">
 			<div class="px-3 py-3 text-2xl font-bold">Super Rocketboard</div>
 			<div class="flex flex-col gap-2">
 				{#each menuItems as item (item.label)}
@@ -50,7 +50,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="ml-80 flex w-full flex-col px-7 py-5">
+	<div class="ml-72 flex w-full flex-col px-7 py-5">
 		{@render children()}
 	</div>
 </div>

@@ -1,39 +1,33 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { getDeviceData, getDeviceFreshness } from './display.remote';
+	import { getDeviceData } from './display.remote';
 	import { addToast } from '$lib/toast.svelte';
 	import PlaylistDisplay from './PlaylistDisplay.svelte';
+	import type { Unsubscriber } from 'svelte/store';
+	import { source } from 'sveltekit-sse';
 
 	let { params } = $props();
 	let deviceId = $derived(Number(params.deviceId));
 
 	// svelte-ignore state_referenced_locally
 	let device = getDeviceData({ deviceId });
-	let freshness: number;
+
+	let eventUnsub: Unsubscriber | undefined;
 
 	onMount(async () => {
-		freshness = window.setInterval(async () => {
-			if (device.ready) {
-				const freshnessData = {
-					deviceId,
-					deviceFreshness: device.current.updated,
-					playlistFreshness: device.current.playlist?.updated || 0
-				};
-        try {
-          if (await getDeviceFreshness(freshnessData)) {
+		// notificationAudio = new Audio('/audio/notification01.mp3');
+		eventUnsub = source(`/device/${deviceId}/events`)
+			.select('update')
+			.subscribe((v) => {
+				try {
+					let data = JSON.parse(v);
 					device.refresh();
 					addToast('success', 'Updated!');
-				}
-        } catch (e) {
-					addToast('error', 'Failed to refresh data');
-        }
-				
-			}
-		}, 3000);
+				} catch (e) {}
+			});
 	});
-
 	onDestroy(() => {
-		clearInterval(freshness);
+		if (eventUnsub) eventUnsub();
 	});
 </script>
 

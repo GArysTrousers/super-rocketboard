@@ -5,6 +5,7 @@ import z from 'zod';
 import { Image as CrossImage } from 'cross-image';
 import { rm, writeFile } from 'node:fs/promises';
 import { apiPersmission } from '$lib/session';
+import { refreshAllDevicesOnPlaylist } from '$lib/sse';
 
 const getPlaylistsArgs = z.undefined();
 export const getPlaylists = query(getPlaylistsArgs, async (data) => {
@@ -65,8 +66,8 @@ export const setPlaylistPositions = query(setPlaylistPositionsArgs, async (data)
 				position: i++
 			}
 		);
-		updateFreshness(data.playlistId);
 	}
+  refreshAllDevicesOnPlaylist(data.playlistId)
 });
 
 const removeImageFromPlaylistArgs = z.object({
@@ -87,7 +88,7 @@ export const removeImageFromPlaylist = command(removeImageFromPlaylistArgs, asyn
 		console.log('Failed to delete lg image');
 	}
 	sql.set(`DELETE FROM image WHERE imageId = :imageId`, data);
-	updateFreshness(image.playlistId);
+	refreshAllDevicesOnPlaylist(image.playlistId)
 });
 
 const addImageToPlaylistArgs = z.object({
@@ -117,7 +118,7 @@ export const addImageToPlaylist = command(addImageToPlaylistArgs, async (data) =
         VALUES (:imageId, :sm, :lg, :playlistId)`,
 				newObj
 			);
-			updateFreshness(data.playlistId);
+      refreshAllDevicesOnPlaylist(data.playlistId)
 		} catch (e) {
 			console.log(e);
 			sql.set(`DELETE FROM image WHERE imageId = :id`, { id: res.lastInsertRowid });
@@ -142,11 +143,4 @@ function decode(dataURI: string) {
 			buffer: Buffer.from(res[2], 'base64')
 		};
 	else throw "nah she's fucked ay";
-}
-
-function updateFreshness(playlistId: number) {
-	sql.set(`UPDATE playlist SET updated = :updated WHERE playlistId = :playlistId`, {
-		playlistId: playlistId,
-		updated: Date.now()
-	});
 }

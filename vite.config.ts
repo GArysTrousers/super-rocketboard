@@ -2,7 +2,8 @@ import tailwindcss from '@tailwindcss/vite';
 // import adapter from '@sveltejs/adapter-node';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import adapter from '@jesterkit/exe-sveltekit';
+// import adapter from '@jesterkit/exe-sveltekit';
+import adapter from './sveltekit-compile/index.ts'
 
 export default defineConfig({
 	build: {

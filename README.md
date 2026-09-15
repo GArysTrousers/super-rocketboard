@@ -30,3 +30,10 @@ You should never need to change this.
 Playlists are lists of images that you can assign to one or more device.
 
 You could create playlists for future use such as events or evacuation instructions, then assign them to devices when they are relevent.
+
+## Future Features
+- Configurable permissions
+- Options for devices (slide display length etc)
+- Time, Date, Weather
+- Bulk update of device selected playlists
+- Messages
