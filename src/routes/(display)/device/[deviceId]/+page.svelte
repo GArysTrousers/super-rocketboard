@@ -16,7 +16,6 @@
 	let eventUnsub: Unsubscriber | undefined;
 
 	onMount(async () => {
-		// notificationAudio = new Audio('/audio/notification01.mp3');
 		eventUnsub = source(`/device/${deviceId}/events`)
 			.select('update')
 			.subscribe((v) => {

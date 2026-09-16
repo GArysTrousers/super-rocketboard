@@ -2,8 +2,7 @@ import { command, query } from '$app/server';
 import { config } from '$lib/config';
 import { sql } from '$lib/db';
 import z from 'zod';
-import { Image as CrossImage } from 'cross-image';
-import { rm, writeFile } from 'node:fs/promises';
+import { rm } from 'node:fs/promises';
 import { apiPersmission } from '$lib/session';
 import { refreshAllDevicesOnPlaylist } from '$lib/sse';
 // import sharp from 'sharp';
@@ -116,20 +115,6 @@ export const addImageToPlaylist = command(addImageToPlaylistArgs, async (data) =
 					.webp()
 					.toBuffer()
 			);
-			// // Save fullsize
-			// await sharp(imageData.buffer)
-			// 	.webp()
-			// 	.toFile(`${config.dataDir}/img/${res.lastInsertRowid}-lg.webp`);
-			// // Save thumbnail
-			// await sharp(imageData.buffer)
-			// 	.resize({ width: 300, height: 300, fit: 'inside' })
-			// 	.webp()
-			// 	.toFile(`${config.dataDir}/img/${res.lastInsertRowid}-sm.webp`);
-			// const image = await CrossImage.decode(imageData.buffer);
-			// const imageLg = await image.encode('webp');
-			// const imageSm = await image.resize({ height: 300, width: 300, fit: 'fit' }).encode('webp');
-			// await writeFile(`${config.dataDir}/img/${res.lastInsertRowid}-lg.webp`, imageLg);
-			// await writeFile(`${config.dataDir}/img/${res.lastInsertRowid}-sm.webp`, imageSm);
 			const newObj = {
 				imageId: res.lastInsertRowid,
 				sm: `${res.lastInsertRowid}-sm.webp`,
