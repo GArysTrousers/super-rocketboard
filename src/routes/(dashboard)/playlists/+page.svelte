@@ -11,7 +11,7 @@
 	const playlists = getPlaylists();
 
 	$effect(() => {
-		if (playlists.current.length > 0) selectedPlaylist = playlists.current[0];
+		if (playlists.current && playlists.current.length > 0) selectedPlaylist = playlists.current[0];
 	});
 
 	const newModal = $state({
@@ -35,8 +35,8 @@
 </script>
 
 <div class="flex w-full max-w-7xl flex-col gap-3">
-	<div class="flex flex-row items-end justify-between">
-		<div class="text-xl font-semibold">Playlists</div>
+	<div class="flex flex-row items-end justify-between pb-6">
+		<div class="text-2xl flex flex-row gap-2 items-center font-semibold">Playlists</div>
 		<div class="flex flex-row gap-3"></div>
 	</div>
 

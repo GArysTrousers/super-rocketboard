@@ -5,10 +5,6 @@ export type Emitter = (eventName: string, data: string) => Unsafe<void, Error>;
 
 const connectedDevices: ConnectedDevice[] = [];
 
-// setInterval(() => {
-//   console.log('displays connected:', connectedDevices.length);
-// }, 5000);
-
 interface ConnectedDevice {
 	deviceId: number;
 	emit: Emitter;
@@ -23,6 +19,10 @@ export function removeDeviceConnection(emit: Emitter) {
   const index = connectedDevices.findIndex((v) => v.emit === emit);
 	if (index > -1) connectedDevices.splice(index, 1);
   console.log('🔴 display disconnected | total connected:', connectedDevices.length);
+}
+
+export function getConnectedDevices() {
+  return connectedDevices.map((v) => v.deviceId)
 }
 
 

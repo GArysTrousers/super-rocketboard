@@ -68,6 +68,10 @@ export function migrateDb(dbPath: string, schema: string) {
 		if (defTable.sql !== curTable.sql) {
 			// table exists but is different
 			console.log('change table:', defTable.name);
+      //show diff
+      // console.log('def:', defTable.sql);
+      // console.log('cur:', curTable.sql);
+      
 			//get data from old table
 			const columnNames = (defDB.prepare(`pragma table_info(${defTable.name})`).all() as unknown as ColumnInfo[]).map((v) => v.name);
 			const data = curDB.prepare(`SELECT * FROM ${curTable.name}`).all();

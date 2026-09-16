@@ -47,8 +47,8 @@
 </script>
 
 <div class="flex w-full max-w-4xl flex-col gap-3">
-	<div class="flex flex-row items-end justify-between">
-		<div class="text-xl font-semibold">Devices</div>
+	<div class="flex flex-row items-end justify-between pb-7">
+		<div class="text-2xl flex flex-row gap-2 items-center font-semibold">Devices</div>
 		<div class="flex flex-row gap-3">
 			<button class="btn bg-sky-700" onclick={openNewModal}>New</button>
 		</div>
@@ -57,12 +57,12 @@
 	<div class="flex flex-col">
 		<table class="table">
 			<thead>
-				<tr>
+				<tr class="font-bold">
 					<td>ID</td>
 					<td>Name</td>
 					<td>IP</td>
 					<td>Playlist</td>
-					<td>Open</td>
+					<td>Actions</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -81,8 +81,10 @@
 						</td>
 						<td>
 							<div class="flex flex-row gap-4 px-3">
-								<a href="/device/{d.deviceId}"><Fa icon={faArrowUpRightFromSquare} /></a>
+								<a href="/device/{d.deviceId}" title="Open Display Page" target="_blank"><Fa icon={faArrowUpRightFromSquare} /></a>
 								<button
+                class="hover:text-red-500 transition-colors"
+                title="Delete Device"
 									onclick={async () => {
 										await removeDevice({ deviceId: d.deviceId });
 										devices.refresh();

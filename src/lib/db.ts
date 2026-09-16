@@ -7,7 +7,6 @@ import { rmSync, existsSync } from 'node:fs';
 import { migrateDb } from './sqlite-migrator';
 
 export function checkDb(dbPath: string, onExist: 'migrate' | 'delete') {
-	console.log(dbPath, existsSync(dbPath));
 	if (existsSync(dbPath)) {
 		if (onExist === 'migrate') {
 			console.log('running migrate...');

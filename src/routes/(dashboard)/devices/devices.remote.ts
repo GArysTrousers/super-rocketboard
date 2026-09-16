@@ -7,7 +7,7 @@ import z from 'zod';
 const getPlaylistsArgs = z.undefined();
 
 export const getPlaylists = query(getPlaylistsArgs, async (data) => {
-  apiPersmission('user')
+	apiPersmission('user');
 	const playlists = sql.get<Playlist>(`SELECT * FROM playlist`);
 	return playlists;
 });
@@ -15,7 +15,7 @@ export const getPlaylists = query(getPlaylistsArgs, async (data) => {
 const getDevicesArgs = z.undefined();
 
 export const getDevices = query(getDevicesArgs, async (data) => {
-  apiPersmission('user')
+	apiPersmission('user');
 	const devices = sql.get<Device>(`SELECT * FROM device`);
 	return devices;
 });
@@ -26,11 +26,8 @@ const createDeviceArgs = z.object({
 });
 
 export const createDevice = command(createDeviceArgs, async (data) => {
-  apiPersmission('admin')
-	sql.set(`INSERT INTO device (name, ip, updated) VALUES (:name, :ip, :updated)`, {
-		...data,
-		updated: Date.now()
-	});
+	apiPersmission('admin');
+	sql.set(`INSERT INTO device (name, ip) VALUES (:name, :ip)`, data);
 });
 
 const updateDeviceArgs = z.object({
@@ -41,18 +38,16 @@ const updateDeviceArgs = z.object({
 });
 
 export const updateDevice = command(updateDeviceArgs, async (data) => {
-  apiPersmission('user')
+	apiPersmission('user');
 	sql.set(
 		`UPDATE device SET 
     name = :name, 
     ip = :ip, 
-    playlistId = :playlistId, 
-    updated = :updated 
+    playlistId = :playlistId
     WHERE deviceId = :deviceId`,
-		{ ...data, updated: Date.now() }
+		data
 	);
-  refreshDevice(data.deviceId)
-  console.log('refresh',data.deviceId);
+	refreshDevice(data.deviceId);
 });
 
 const removeDeviceArgs = z.object({
@@ -60,13 +55,6 @@ const removeDeviceArgs = z.object({
 });
 
 export const removeDevice = command(removeDeviceArgs, async (data) => {
-  apiPersmission('admin')
+	apiPersmission('admin');
 	sql.set(`DELETE FROM device WHERE deviceId = :deviceId`, data);
 });
-
-function updateFreshness(deviceId: number) {
-	sql.set(`UPDATE device SET updated = :updated WHERE deviceId = :deviceId`, {
-		deviceId: deviceId,
-		updated: Date.now()
-	});
-}

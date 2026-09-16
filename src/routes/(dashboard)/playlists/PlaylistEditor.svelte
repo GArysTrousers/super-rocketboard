@@ -68,7 +68,7 @@
 	>
 		{#each items as image (image.id)}
 			<div
-				class="image-tile flex aspect-square w-32 flex-row items-start justify-end p-1 lg:w-42"
+				class="image-tile flex aspect-square w-32 flex-row items-start justify-end p-1 lg:w-42 rounded-lg"
 				animate:flip={{ duration: 300 }}
 				style="background-image: url('/content/img/{image.sm}');"
 			>

@@ -8,7 +8,7 @@ import adapter from './sveltekit-compile/index.ts'
 export default defineConfig({
 	build: {
 		rollupOptions: {
-			external: [/^node:/] // Marks all "node:" prefixed modules as external
+			external: [/^node:/, "sharp"] // Marks all "node:" prefixed modules as external
 		}
 	},
 	plugins: [

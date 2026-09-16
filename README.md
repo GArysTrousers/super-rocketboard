@@ -31,6 +31,14 @@ Playlists are lists of images that you can assign to one or more device.
 
 You could create playlists for future use such as events or evacuation instructions, then assign them to devices when they are relevent.
 
+## Configuration
+### Server Port
+It uses the env variable PORT to set a port for the web server, for example, this script will set the port to 5000 and then launch the exe:
+```
+# Powershell
+$env:PORT = 5000
+./super-rocketboard.exe
+```
 ## Future Features
 - Configurable permissions
 - Options for devices (slide display length etc)

@@ -5,6 +5,7 @@
 	import PlaylistDisplay from './PlaylistDisplay.svelte';
 	import type { Unsubscriber } from 'svelte/store';
 	import { source } from 'sveltekit-sse';
+	import LoadingSpinner from '$lib/comp/LoadingSpinner.svelte';
 
 	let { params } = $props();
 	let deviceId = $derived(Number(params.deviceId));
@@ -32,7 +33,9 @@
 </script>
 
 {#await device}
-	<div class="">Loading...</div>
+	<div class="flex h-screen w-screen flex-row items-center justify-center text-5xl">
+		<LoadingSpinner />
+	</div>
 {:then}
 	{#if device.ready && device.current.playlist !== null}
 		<PlaylistDisplay playlist={device.current.playlist}></PlaylistDisplay>

@@ -114,6 +114,7 @@ const server = Bun.serve({
 		if (staticResponse) return staticResponse;
 
 		// Handle other routes (SSR, API endpoints, etc.)
+    
 		return await svelteKitServer.respond(req, {
 			getClientAddress() {
 				return bunServer.requestIP(req)?.address || "127.0.0.1";
@@ -131,4 +132,5 @@ const server = Bun.serve({
 	},
 });
 
-console.log(`💿 Listening on http://localhost:${server.port}`);
+console.log(`🚀 Super Rocketboard Started!`);
+console.log(`\nListening on http://localhost:${server.port}`);
