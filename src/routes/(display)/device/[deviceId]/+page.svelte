@@ -14,17 +14,26 @@
 	let device = getDeviceData({ deviceId });
 
 	let eventUnsub: Unsubscriber | undefined;
+	// let reconnectTimer: number | undefined;
 
 	onMount(async () => {
-		eventUnsub = source(`/device/${deviceId}/events`)
-			.select('update')
-			.subscribe((v) => {
-				try {
-					let data = JSON.parse(v);
-					device.refresh();
-					addToast('success', 'Updated!');
-				} catch (e) {}
-			});
+		const connection = source(`/device/${deviceId}/events`, {
+			onclose({ connect }) {
+				// reconnectTimer = window.setInterval(connect, 3000);
+        setTimeout(connect, 3000)
+        console.log('onclose triggered');
+        addToast('error', "Reconnecting...")
+			}
+		});
+
+		const select = connection.select('update')
+    eventUnsub = select.subscribe((v) => {
+			try {
+				let data = JSON.parse(v);
+				device.refresh();
+				addToast('success', 'Updated!');
+			} catch (e) {}
+		});
 	});
 	onDestroy(() => {
 		if (eventUnsub) eventUnsub();
@@ -37,7 +46,7 @@
 	</div>
 {:then}
 	{#if device.ready && device.current.playlist !== null}
-		<PlaylistDisplay playlist={device.current.playlist}></PlaylistDisplay>
+		<PlaylistDisplay deviceData={device.current}></PlaylistDisplay>
 	{/if}
 {/await}
 

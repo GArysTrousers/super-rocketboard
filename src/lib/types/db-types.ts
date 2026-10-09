@@ -16,4 +16,6 @@ interface Device {
   name: string;
   ip: string;
   playlistId: number;
+  secondsPerSlide: number;
+  showTime: number;
 }

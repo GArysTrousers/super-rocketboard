@@ -34,7 +34,9 @@ const updateDeviceArgs = z.object({
 	deviceId: z.number(),
 	name: z.string(),
 	ip: z.string(),
-	playlistId: z.number().nullable()
+	playlistId: z.number().nullable(),
+  secondsPerSlide: z.number(),
+  showTime: z.number()
 });
 
 export const updateDevice = command(updateDeviceArgs, async (data) => {
@@ -43,7 +45,9 @@ export const updateDevice = command(updateDeviceArgs, async (data) => {
 		`UPDATE device SET 
     name = :name, 
     ip = :ip, 
-    playlistId = :playlistId
+    playlistId = :playlistId,
+    secondsPerSlide = :secondsPerSlide,
+    showTime = :showTime
     WHERE deviceId = :deviceId`,
 		data
 	);

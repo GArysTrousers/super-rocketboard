@@ -132,5 +132,5 @@ const server = Bun.serve({
 	},
 });
 
-console.log(`🚀 Super Rocketboard Started!`);
+console.log(`🚀 Super Rocketboard Started! (v0.0.3)`);
 console.log(`\nListening on http://localhost:${server.port}`);

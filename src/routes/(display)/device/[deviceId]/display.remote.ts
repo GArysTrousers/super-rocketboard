@@ -25,7 +25,7 @@ export const getDeviceData = query(getDevicePlaylistArgs, async (data) => {
 			...playlist,
 			images
 		}
-	};
+	} as DeviceData;
 });
 
 export interface DeviceData extends Device {

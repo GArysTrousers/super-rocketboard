@@ -5,7 +5,7 @@ body {
 }
 
 .btn {
-	@apply rounded px-3 py-1 hover:brightness-110 active:brightness-95 flex flex-row gap-1 items-center justify-center disabled:brightness-50;
+	@apply font-semibold rounded px-3 py-1 hover:brightness-110 active:brightness-95 flex flex-row gap-1 items-center justify-center disabled:brightness-50;
 }
 
 .input {
