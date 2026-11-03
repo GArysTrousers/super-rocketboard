@@ -1,7 +1,7 @@
 {
 	"name": "super-rocketboard",
 	"private": true,
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"type": "module",
 	"scripts": {
 		"dev": "bun --bun vite dev",
@@ -14,8 +14,7 @@
 		"format": "prettier --write .",
 		"db:types": "bun run ./src/lib/sqlite-type-generator.ts"
 	},
-	"dependencies": {
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@fortawesome/free-solid-svg-icons": "^7.3.1",
