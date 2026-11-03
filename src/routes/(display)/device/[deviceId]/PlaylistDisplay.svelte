@@ -13,7 +13,7 @@
 	let timeTimer: number;
 
 	$effect(() => {
-		if (nextSlideTimer === undefined) clearInterval(nextSlideTimer);
+		if (nextSlideTimer !== undefined) clearInterval(nextSlideTimer);
 		nextSlideTimer = window.setInterval(() => {
 			if (deviceData.playlist === null) return;
 			if (deviceData.playlist.images.length < 1) return;
@@ -43,7 +43,7 @@
 <div class="grid h-screen w-screen grid-cols-1 bg-black">
 	{#if deviceData.playlist && deviceData.playlist.images.length > 0}
 		{#each deviceData.playlist.images as image, i (image.imageId)}
-			{#if curIndex == i}
+			{#if curIndex === i}
 				<div
 					class="div-image z-0 col-start-1 row-start-1 bg-black"
 					in:fly={{ x: 20, y: 0, duration: 600 }}

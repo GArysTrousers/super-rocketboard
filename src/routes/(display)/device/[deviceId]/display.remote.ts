@@ -1,12 +1,14 @@
 import { query } from '$app/server';
 import { sql } from '$lib/db';
-import z, { ZodObject } from 'zod';
+import z from 'zod';
 
 const getDevicePlaylistArgs = z.object({
-	deviceId: z.number()
+	deviceId: z.number(),
+  rng: z.number().optional()
 });
 export const getDeviceData = query(getDevicePlaylistArgs, async (data) => {
-	const device = sql.getOne<Device>(`SELECT * FROM device WHERE deviceId = :deviceId`, data);
+  console.log('im running');
+	const device = sql.getOne<Device>(`SELECT * FROM device WHERE deviceId = :deviceId`, {deviceId:data.deviceId});
 	if (device === null) throw Error('No device');
 	if (device.playlistId === null) return { ...device, playlist: null };
 
