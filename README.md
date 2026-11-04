@@ -40,8 +40,8 @@ $env:PORT = 5000
 ./super-rocketboard.exe
 ```
 ## Future Features
-- Options for devices (slide display length etc)
 - Bulk update of device selected playlists
-- Time, Date, Weather
+- Weather
 - Configurable permissions
 - Messages
+- Alerts
