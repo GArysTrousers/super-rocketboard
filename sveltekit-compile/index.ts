@@ -13,6 +13,7 @@ import { ADAPTER_NAME, SVELTEKIT_DIR } from "./constants/const.ts";
 import { discoverClientAssets, generateAssetImports } from "./utils/assets.ts";
 import { compileApplication } from "./utils/compile.ts";
 import { generateDockerfile } from "./utils/docker.ts";
+import { readFileSync, writeFileSync } from "fs";
 
 /**
  * Create the JesterKit EXE adapter
@@ -24,6 +25,12 @@ const adapter = (options?: AdapterOptions): Adapter => {
 		name: ADAPTER_NAME,
 		adapt: async (builder) => {
 			const adapterOptions = { out: "dist", embedStatic: true, binaryName: "app", ...options };
+
+      
+      const packageJson = JSON.parse(readFileSync('./package.json', 'utf-8'))
+      let serverCode = readFileSync('./sveltekit-compile/server/server.ts', 'utf-8')
+      serverCode = serverCode.replace('{{SERVER_VERSION}}', packageJson.version)
+      writeFileSync('./sveltekit-compile/server/index.ts', serverCode)
 
 			// Step 1: Cleanups
 			builder.rimraf(SVELTEKIT_DIR);
